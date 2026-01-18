@@ -42,9 +42,20 @@ const SpecialPromotion: React.FC = () => {
               GIẢI ĐẶC BIỆT
             </div>
             <div className="w-14 h-14 bg-gradient-to-tr from-yellow-500 to-yellow-300 rounded-2xl flex items-center justify-center text-red-800 shadow-xl border border-yellow-200 shrink-0 transform group-hover/item:scale-110 transition-transform">
-              {/* Car Icon representing HRV */}
-              <svg className="w-10 h-10" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M18.92 6.01C18.72 5.42 18.16 5 17.5 5H6.5C5.84 5 5.28 5.42 5.08 6.01L3 12V20C3 20.55 3.45 21 4 21H5C5.55 21 6 20.55 6 20V19H18V20C18 20.55 18.45 21 19 21H20C20.55 21 21 20.55 21 20V12L18.92 6.01ZM6.5 7H17.5L18.83 11H5.17L6.5 7ZM19 17H5V13H19V17ZM7.5 16C8.32843 16 9 15.3284 9 14.5C9 13.6716 8.32843 13 7.5 13C6.67157 13 6 13.6716 6 14.5C6 15.3284 6.67157 16 7.5 16ZM16.5 16C17.3284 16 18 15.3284 18 14.5C18 13.6716 17.3284 13 16.5 13C15.6716 13 15 13.6716 15 14.5C15 15.3284 15.6716 16 16.5 16Z" fill="currentColor"/>
+              {/* Improved Car Icon representing modern SUV (HRV) */}
+              <svg className="w-11 h-11" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                {/* Car body base */}
+                <path d="M2.5 13C2.5 13 3 12 5 12C7 12 17 12 19 12C21 12 21.5 13 21.5 13V16.5C21.5 17.8807 20.3807 19 19 19H5C3.61929 19 2.5 17.8807 2.5 16.5V13Z" fill="currentColor"/>
+                {/* Roof and pillars */}
+                <path d="M5 12L8 6.5C8.3 5.8 9 5.3 9.8 5.3H14.2C15 5.3 15.7 5.8 16 6.5L19 12" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                {/* Wheels */}
+                <circle cx="6.5" cy="19" r="2.2" fill="#FBBF24" stroke="currentColor" strokeWidth="1.5"/>
+                <circle cx="17.5" cy="19" r="2.2" fill="#FBBF24" stroke="currentColor" strokeWidth="1.5"/>
+                {/* Window line */}
+                <path d="M10.5 12V8.5C10.5 7.94772 10.9477 7.5 11.5 7.5H12.5C13.0523 7.5 13.5 7.94772 13.5 8.5V12" stroke="currentColor" strokeWidth="1" strokeOpacity="0.4"/>
+                {/* Headlights detail */}
+                <path d="M18.5 14H19.5" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeOpacity="0.8"/>
+                <path d="M4.5 14H5.5" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeOpacity="0.8"/>
               </svg>
             </div>
             <div className="z-10">
