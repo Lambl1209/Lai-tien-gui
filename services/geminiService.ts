@@ -7,10 +7,13 @@ const ai = new GoogleGenAI({ apiKey: process.env.API_KEY || "" });
 export const fetchLatestRates = async (): Promise<{ rates: BankRate[], sources: GroundingSource[] }> => {
   try {
     const response = await ai.models.generateContent({
-      model: "gemini-3-flash-preview",
+      model: "gemini-3-pro-preview",
       contents: "Cập nhật bảng lãi suất tiền gửi tiết kiệm mới nhất của 20 ngân hàng tại Hà Tĩnh cho các kỳ hạn 1, 2, 3, 6, 12, 13 tháng. Đặc biệt chú ý tách biệt dữ liệu cho 'Agribank Hà Tĩnh' và 'Agribank Hà Tĩnh II'. Trả về dưới dạng JSON bao gồm tên ngân hàng, mã và lãi suất (%) cho từng kỳ hạn.",
       config: {
         tools: [{ googleSearch: {} }],
+        thinkingConfig: {
+          thinkingBudget: 32768, // Cấp ngân sách tư duy tối đa cho mô hình Pro để đảm bảo độ chính xác
+        },
         responseMimeType: "application/json",
         responseSchema: {
           type: Type.OBJECT,

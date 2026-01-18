@@ -3,9 +3,97 @@ import React, { useState, useEffect, useCallback } from 'react';
 import RateTable from './components/RateTable';
 import Calculator from './components/Calculator';
 import AnalysisChart from './components/AnalysisChart';
+import SpecialPromotion from './components/SpecialPromotion';
+import EmployeeConsultationGuide from './components/EmployeeConsultationGuide';
 import { INITIAL_DATA } from './constants';
-import { BankRate, Term, GroundingSource } from './types';
+import { BankRate, Term, GroundingSource, TERMS } from './types';
 import { fetchLatestRates } from './services/geminiService';
+
+// Toast Component
+const Toast = ({ 
+  message, 
+  type, 
+  onClose, 
+  sources 
+}: { 
+  message: string, 
+  type: 'success' | 'error' | 'loading', 
+  onClose: () => void,
+  sources?: GroundingSource[]
+}) => {
+  useEffect(() => {
+    if (type !== 'loading') {
+      const timer = setTimeout(onClose, 6000);
+      return () => clearTimeout(timer);
+    }
+  }, [type, onClose]);
+
+  const icons = {
+    loading: (
+      <svg className="animate-spin h-5 w-5 text-blue-500" viewBox="0 0 24 24">
+        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
+        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
+      </svg>
+    ),
+    success: (
+      <svg className="h-5 w-5 text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+      </svg>
+    ),
+    error: (
+      <svg className="h-5 w-5 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+      </svg>
+    )
+  };
+
+  const bgColors = {
+    loading: 'bg-white border-blue-100',
+    success: 'bg-white border-green-100',
+    error: 'bg-white border-red-100'
+  };
+
+  return (
+    <div className={`fixed bottom-6 right-6 z-[100] flex flex-col gap-2 p-4 rounded-2xl shadow-2xl border ${bgColors[type]} animate-bounce-in max-w-sm w-full sm:w-80`}>
+      <div className="flex items-start justify-between">
+        <div className="flex items-center gap-3">
+          {icons[type]}
+          <span className="text-sm font-bold text-slate-700">{message}</span>
+        </div>
+        {type !== 'loading' && (
+          <button onClick={onClose} className="text-slate-400 hover:text-slate-600 transition-colors">
+            <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+        )}
+      </div>
+
+      {type === 'success' && sources && sources.length > 0 && (
+        <div className="mt-2 pt-2 border-t border-slate-100">
+          <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">Nguồn tham khảo:</p>
+          <div className="flex flex-col gap-1.5 max-h-32 overflow-y-auto pr-1">
+            {sources.slice(0, 4).map((source, idx) => (
+              <a 
+                key={idx} 
+                href={source.uri} 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="text-[11px] text-blue-600 hover:text-blue-800 underline line-clamp-1 flex items-center gap-1"
+              >
+                <svg className="h-3 w-3 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                </svg>
+                {source.title}
+              </a>
+            ))}
+            {sources.length > 4 && <p className="text-[10px] text-slate-400 italic">Và {sources.length - 4} nguồn khác...</p>}
+          </div>
+        </div>
+      )}
+    </div>
+  );
+};
 
 const App: React.FC = () => {
   const [data, setData] = useState<BankRate[]>(INITIAL_DATA);
@@ -14,19 +102,32 @@ const App: React.FC = () => {
   const [lastUpdate, setLastUpdate] = useState<string>(new Date().toLocaleString('vi-VN'));
   const [error, setError] = useState<string | null>(null);
   const [activeChartTerm, setActiveChartTerm] = useState<Term>('12M');
+  
+  const [toast, setToast] = useState<{ message: string, type: 'success' | 'error' | 'loading', sources?: GroundingSource[] } | null>(null);
 
   const handleUpdate = useCallback(async () => {
     setLoading(true);
     setError(null);
+    setToast({ message: "Đang cập nhật dữ liệu lãi suất mới nhất...", type: 'loading' });
+    
     try {
       const result = await fetchLatestRates();
       if (result.rates && result.rates.length > 0) {
         setData(result.rates);
         setSources(result.sources);
         setLastUpdate(new Date().toLocaleString('vi-VN'));
+        setToast({ 
+          message: "Cập nhật dữ liệu thành công!", 
+          type: 'success', 
+          sources: result.sources 
+        });
+      } else {
+        throw new Error("Empty data");
       }
     } catch (err) {
-      setError("Không thể cập nhật dữ liệu mới nhất. Vui lòng thử lại sau.");
+      const msg = "Không thể cập nhật dữ liệu. Vui lòng thử lại.";
+      setError(msg);
+      setToast({ message: "Cập nhật thất bại!", type: 'error' });
       console.error(err);
     } finally {
       setLoading(false);
@@ -34,8 +135,16 @@ const App: React.FC = () => {
   }, []);
 
   return (
-    <div className="min-h-screen pb-12">
-      {/* Header */}
+    <div className="min-h-screen pb-12 relative">
+      {toast && (
+        <Toast 
+          message={toast.message} 
+          type={toast.type} 
+          sources={toast.sources}
+          onClose={() => setToast(null)} 
+        />
+      )}
+
       <header className="bg-white border-b border-slate-200 sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
           <div className="flex items-center gap-3">
@@ -50,10 +159,10 @@ const App: React.FC = () => {
           <button 
             onClick={handleUpdate}
             disabled={loading}
-            className={`flex items-center gap-2 px-4 py-2 rounded-full font-semibold text-sm transition-all ${
+            className={`flex items-center gap-2 px-5 py-2.5 rounded-full font-bold text-sm transition-all shadow-sm ${
               loading 
               ? 'bg-slate-100 text-slate-400 cursor-not-allowed' 
-              : 'bg-blue-50 text-blue-600 hover:bg-blue-100'
+              : 'bg-blue-600 text-white hover:bg-blue-700 active:scale-95 shadow-blue-100'
             }`}
           >
             {loading ? (
@@ -63,23 +172,22 @@ const App: React.FC = () => {
               </svg>
             ) : (
               <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" />
               </svg>
             )}
-            {loading ? 'Đang cập nhật...' : 'Cập nhật AI'}
+            {loading ? 'Đang cập nhật...' : 'Cập nhật'}
           </button>
         </div>
       </header>
 
       <main className="max-w-7xl mx-auto px-4 mt-8">
-        {/* Status bar */}
         <div className="mb-8 flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div>
-            <h2 className="text-2xl font-extrabold text-slate-900">Bảng so sánh lãi suất</h2>
+            <h2 className="text-2xl font-extrabold text-slate-900 tracking-tight">Bảng so sánh lãi suất</h2>
             <p className="text-slate-500 mt-1">Theo dõi biến động lãi suất của 20 ngân hàng tại khu vực Hà Tĩnh.</p>
           </div>
           <div className="flex items-center gap-4 text-sm text-slate-500">
-             <div className="flex items-center gap-2 px-3 py-1.5 bg-white border border-slate-200 rounded-lg">
+             <div className="flex items-center gap-2 px-3 py-1.5 bg-white border border-slate-200 rounded-lg shadow-sm">
                <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
                Cập nhật lần cuối: <span className="font-semibold text-slate-700">{lastUpdate}</span>
              </div>
@@ -95,16 +203,14 @@ const App: React.FC = () => {
           </div>
         )}
 
-        {/* Dashboard Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          {/* Main Table Area */}
           <div className="lg:col-span-2 space-y-8">
             <RateTable data={data} />
             
             <div className="bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
                <div className="flex items-center justify-between mb-4">
                   <h3 className="font-bold text-slate-800">Nguồn dữ liệu tham khảo</h3>
-                  <span className="text-xs text-slate-400">Được trích xuất bởi Gemini Search</span>
+                  <span className="text-xs text-slate-400">Được trích xuất bởi Gemini 3 Pro Search</span>
                </div>
                <div className="flex flex-wrap gap-2">
                  {sources.length > 0 ? sources.map((s, idx) => (
@@ -124,14 +230,19 @@ const App: React.FC = () => {
             </div>
           </div>
 
-          {/* Sidebar / Tools */}
           <div className="space-y-8">
+            {/* 1. Khuyến mãi đặc biệt (Lên đầu tiên) */}
+            <SpecialPromotion />
+
+            {/* 2. Hướng dẫn cho cán bộ (Bỏ xuống dưới khuyến mãi) */}
+            <EmployeeConsultationGuide />
+            
             <Calculator data={data} />
             
             <AnalysisChart data={data} term={activeChartTerm} />
             
             <div className="flex flex-wrap gap-2 justify-center">
-              {(['6M', '12M', '13M'] as Term[]).map(t => (
+              {TERMS.map(t => (
                 <button
                   key={t}
                   onClick={() => setActiveChartTerm(t)}
@@ -141,7 +252,7 @@ const App: React.FC = () => {
                     : 'bg-white text-slate-600 border border-slate-200 hover:border-slate-300'
                   }`}
                 >
-                  Xem {t}
+                  {t}
                 </button>
               ))}
             </div>
@@ -163,11 +274,21 @@ const App: React.FC = () => {
         </div>
       </main>
 
-      {/* Footer */}
       <footer className="max-w-7xl mx-auto px-4 mt-16 text-center text-slate-400 text-xs">
-        <p>© 2024 Ha Tinh Banking Dashboard. Dữ liệu được hỗ trợ bởi Gemini AI Flash Pro.</p>
+        <p>© 2026 Ha Tinh Banking Dashboard. Dữ liệu được cập nhật tự động bởi hệ thống Gemini 3 Pro.</p>
         <p className="mt-2">Lưu ý: Công cụ chỉ mang tính chất tham khảo so sánh, không chịu trách nhiệm cho các quyết định tài chính cá nhân.</p>
       </footer>
+
+      <style dangerouslySetInnerHTML={{ __html: `
+        @keyframes bounce-in {
+          0% { transform: translateY(100px) scale(0.9); opacity: 0; }
+          60% { transform: translateY(-10px) scale(1.02); opacity: 1; }
+          100% { transform: translateY(0) scale(1); opacity: 1; }
+        }
+        .animate-bounce-in {
+          animation: bounce-in 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+      `}} />
     </div>
   );
 };
