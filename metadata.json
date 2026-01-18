@@ -1,0 +1,5 @@
+{
+  "name": "Ha Tinh Bank Interest Tracker",
+  "description": "Ứng dụng theo dõi và so sánh lãi suất tiền gửi của 20 ngân hàng tại TP Hà Tĩnh (bao gồm Agribank Hà Tĩnh và Hà Tĩnh II) với tính năng cập nhật thời gian thực bằng AI.",
+  "requestFramePermissions": []
+}
