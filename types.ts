@@ -25,3 +25,21 @@ export interface GroundingSource {
   title: string;
   uri: string;
 }
+
+export interface SavedCalculation {
+  id: string;
+  bankName: string;
+  amount: number;
+  rate: number;
+  term: string;
+  interest: number;
+  timestamp: string;
+}
+
+export interface RateHistoryEntry {
+  id: string;
+  timestamp: string;
+  data: BankRate[];
+  sources: GroundingSource[];
+  note?: string;
+}

@@ -8,9 +8,11 @@ const EmployeeConsultationGuide: React.FC = () => {
     pain: {
       title: "Nỗi đau của khách hàng",
       items: [
-        "Lãi suất tiết kiệm thông thường đang ở mức ổn định nhưng chưa thực sự đột phá.",
-        "Khách hàng có số vốn nhỏ (6-10 triệu) thường cảm thấy khó tiếp cận các ưu đãi lớn.",
-        "Nỗi lo 'tiền mất giá' đầu năm nếu chỉ gửi tiết kiệm truyền thống."
+        "Lãi suất tiết kiệm thông thường đang ở mức ổn định nhưng chưa thực sự đột phá so với lạm phát.",
+        "Khách hàng có số vốn nhỏ (6-10 triệu) thường cảm thấy bị lãng quên trong các chương trình ưu đãi lớn.",
+        "Nỗi lo 'tiền mất giá' hoặc bỏ lỡ cơ hội đầu tư khác nếu gửi tiền kỳ hạn quá dài.",
+        "Mất quá nhiều thời gian để đi khảo sát và so sánh lãi suất giữa hàng chục ngân hàng khác nhau tại Hà Tĩnh.",
+        "E ngại về sự an toàn của các hình thức đầu tư rủi ro như chứng khoán hay bất động sản trong năm 2026."
       ],
       icon: (
         <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -25,9 +27,11 @@ const EmployeeConsultationGuide: React.FC = () => {
     desire: {
       title: "Mong muốn thầm kín",
       items: [
-        "Sự may mắn, 'lộc phát' để khởi đầu một năm mới Bính Ngọ suôn sẻ.",
-        "Cơ hội trúng giải thưởng lớn (Ô tô, Xe máy) để nâng tầm chất lượng cuộc sống.",
-        "Gửi tiền vào nơi an tâm nhất (Ngân hàng Nhà nước) nhưng vẫn phải có tính dự thưởng."
+        "Sự may mắn, 'lộc phát' để khởi đầu một năm mới Bính Ngọ suôn sẻ và hanh thông.",
+        "Cơ hội sở hữu những tài sản giá trị lớn (Ô tô, Xe máy SH) để nâng tầm vị thế gia đình.",
+        "Gửi tiền vào ngân hàng Nhà nước để an tâm tuyệt đối nhưng vẫn có cảm giác 'chơi mà trúng'.",
+        "Thủ tục gửi tiền và nhận thưởng phải nhanh chóng, minh bạch, không rườm rà.",
+        "Được tư vấn bởi những cán bộ thân thiện, hiểu tâm lý địa phương và tận tâm hướng dẫn."
       ],
       icon: (
         <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -42,9 +46,12 @@ const EmployeeConsultationGuide: React.FC = () => {
     action: {
       title: "Cán bộ cần làm gì?",
       items: [
-        "Tư vấn khách hàng chia nhỏ sổ tiết kiệm thành các mức 6 triệu để tối ưu phiếu dự thưởng.",
-        "Nhấn mạnh vào thời hạn quay số (Tháng 6/2026) - nhân đôi niềm vui sau Tết.",
-        "Chủ động gọi điện cho nhóm khách hàng nhận lương qua thẻ/hưu trí tại địa phương."
+        "Chủ động phân tích bài toán lợi ích: Gộp lãi suất thực tế + giá trị kỳ vọng của phiếu dự thưởng.",
+        "Tư vấn khách hàng chia nhỏ số tiền gửi thành các mốc 6 triệu để nhận được nhiều phiếu dự thưởng nhất.",
+        "Nhấn mạnh vào thời hạn quay số cuối kỳ (Tháng 6/2026) - tạo sự hào hứng tích lũy sau Tết.",
+        "Tận dụng mạng xã hội (Zalo, Facebook cá nhân) để chia sẻ liên tục về các giải thưởng đã có người trúng.",
+        "Tổ chức các buổi gặp gỡ, tri ân tại địa phương để trực tiếp giải đáp thắc mắc về thể lệ chương trình.",
+        "Hỗ trợ tính toán lãi suất nhanh cho khách hàng bằng công cụ so sánh trực quan này."
       ],
       icon: (
         <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -59,9 +66,12 @@ const EmployeeConsultationGuide: React.FC = () => {
     advantage: {
       title: "Lợi thế Agribank HT II",
       items: [
-        "Thương hiệu Agribank có độ tin cậy cao nhất tại khu vực nông thôn Hà Tĩnh.",
-        "Tổng giá trị giải thưởng 1.2 tỷ đồng - lớn nhất trong các kỳ khuyến mãi tại tỉnh.",
-        "Giải đặc biệt Ô tô Honda HR-V là món quà cực kỳ thiết thực và đẳng cấp."
+        "Thương hiệu Agribank có bề dày lịch sử và mạng lưới bao phủ rộng khắp nhất tại Hà Tĩnh.",
+        "Chương trình khuyến mãi lớn nhất trong năm tại tỉnh với tổng giá trị giải thưởng vượt 1.2 tỷ đồng.",
+        "Giải đặc biệt Ô tô Honda HR-V là món quà thực tế, có tính thanh khoản và giá trị sử dụng cực cao.",
+        "Hệ thống công nghệ hiện đại, cho phép khách hàng theo dõi số dư và phiếu dự thưởng ngay trên điện thoại.",
+        "Đội ngũ cán bộ địa phương am hiểu văn hóa, luôn sẵn sàng hỗ trợ khách hàng tận nhà khi cần thiết.",
+        "Lãi suất luôn nằm trong nhóm cạnh tranh nhất trong khối ngân hàng thương mại Nhà nước."
       ],
       icon: (
         <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -95,12 +105,12 @@ const EmployeeConsultationGuide: React.FC = () => {
       </div>
 
       <div className="p-5">
-        <div className="flex bg-slate-100/50 p-1 rounded-2xl mb-6">
+        <div className="flex bg-slate-100/50 p-1 rounded-2xl mb-6 overflow-x-auto scrollbar-hide">
           {(['pain', 'desire', 'action', 'advantage'] as const).map((tab) => (
             <button
               key={tab}
               onClick={() => setActiveTab(tab)}
-              className={`flex-1 py-2 text-[10px] font-bold rounded-xl transition-all duration-300 ${
+              className={`flex-1 py-2 px-3 text-[10px] font-bold rounded-xl transition-all duration-300 whitespace-nowrap ${
                 activeTab === tab 
                 ? 'bg-white text-indigo-600 shadow-sm' 
                 : 'text-slate-500 hover:text-slate-700'
@@ -111,7 +121,7 @@ const EmployeeConsultationGuide: React.FC = () => {
           ))}
         </div>
 
-        <div className={`rounded-2xl p-5 border ${content[activeTab].borderColor} ${content[activeTab].bgColor} transition-all duration-500`}>
+        <div className={`rounded-2xl p-5 border ${content[activeTab].borderColor} ${content[activeTab].bgColor} transition-all duration-500 min-h-[250px]`}>
           <div className="flex items-center gap-3 mb-4">
             <div className={`p-2 rounded-xl bg-white shadow-sm ${content[activeTab].color}`}>
               {content[activeTab].icon}

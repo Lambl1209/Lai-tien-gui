@@ -15,7 +15,7 @@ const SpecialPromotion: React.FC = () => {
       <div className="relative z-10">
         <div className="flex items-center justify-between mb-5">
           <div className="flex items-center gap-2">
-            <div className="bg-yellow-400 p-1 rounded-lg">
+            <div className="bg-yellow-400 p-1 rounded-lg shadow-sm">
               <svg className="w-4 h-4 text-red-700" fill="currentColor" viewBox="0 0 20 20">
                 <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
               </svg>
@@ -36,44 +36,58 @@ const SpecialPromotion: React.FC = () => {
 
         {/* Prize Grid */}
         <div className="space-y-3">
-          {/* Main Prize */}
-          <div className="bg-white/15 backdrop-blur-md rounded-2xl p-4 border border-white/20 flex items-center gap-4 relative overflow-hidden group/item hover:bg-white/20 transition-all">
-            <div className="absolute top-0 right-0 p-2 bg-yellow-400 text-red-700 text-[9px] font-black rounded-bl-xl shadow-sm">
-              ĐẶC BIỆT
+          {/* Main Prize: Honda HR-V */}
+          <div className="bg-white/15 backdrop-blur-md rounded-2xl p-4 border border-white/20 flex items-center gap-4 relative overflow-hidden group/item hover:bg-white/25 transition-all shadow-lg ring-1 ring-white/30">
+            <div className="absolute top-0 right-0 p-2 bg-yellow-400 text-red-700 text-[9px] font-black rounded-bl-xl shadow-md z-20">
+              GIẢI ĐẶC BIỆT
             </div>
-            <div className="w-12 h-12 bg-yellow-400 rounded-full flex items-center justify-center text-red-700 shadow-inner">
-              <svg className="w-7 h-7" fill="currentColor" viewBox="0 0 20 20">
-                <path d="M8 16.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zM15 16.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0z" />
-                <path d="M3 4a1 1 0 00-1 1v10a1 1 0 001 1h1.05a2.5 2.5 0 014.9 0H10a1 1 0 001-1V5a1 1 0 00-1-1H3zM14 7h-3v7h5.05a2.5 2.5 0 014.9 0H22a1 1 0 001-1V9.5a4.5 4.5 0 00-4.5-4.5H14.5A.5.5 0 0014 5.5V7z" />
+            <div className="w-14 h-14 bg-gradient-to-tr from-yellow-500 to-yellow-300 rounded-2xl flex items-center justify-center text-red-800 shadow-xl border border-yellow-200 shrink-0 transform group-hover/item:scale-110 transition-transform">
+              {/* Car Icon representing HRV */}
+              <svg className="w-10 h-10" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M18.92 6.01C18.72 5.42 18.16 5 17.5 5H6.5C5.84 5 5.28 5.42 5.08 6.01L3 12V20C3 20.55 3.45 21 4 21H5C5.55 21 6 20.55 6 20V19H18V20C18 20.55 18.45 21 19 21H20C20.55 21 21 20.55 21 20V12L18.92 6.01ZM6.5 7H17.5L18.83 11H5.17L6.5 7ZM19 17H5V13H19V17ZM7.5 16C8.32843 16 9 15.3284 9 14.5C9 13.6716 8.32843 13 7.5 13C6.67157 13 6 13.6716 6 14.5C6 15.3284 6.67157 16 7.5 16ZM16.5 16C17.3284 16 18 15.3284 18 14.5C18 13.6716 17.3284 13 16.5 13C15.6716 13 15 13.6716 15 14.5C15 15.3284 15.6716 16 16.5 16Z" fill="currentColor"/>
               </svg>
             </div>
-            <div>
-              <h4 className="font-black text-base text-white">Ô tô Honda HR-V</h4>
-              <p className="text-[11px] text-yellow-100 font-medium italic opacity-80">Trị giá 707.000.000 đ</p>
+            <div className="z-10">
+              <h4 className="font-black text-lg text-white drop-shadow">Ô tô Honda HR-V</h4>
+              <p className="text-[11px] text-yellow-100 font-black italic">Giá trị: 707.000.000 đ</p>
             </div>
+            {/* Light reflection effect */}
+            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent -translate-x-full group-hover/item:translate-x-full transition-transform duration-1000"></div>
           </div>
 
           {/* Secondary Prizes Grid */}
           <div className="grid grid-cols-2 gap-3">
             <div className="bg-white/10 backdrop-blur-sm p-3 rounded-2xl border border-white/10 hover:bg-white/15 transition-all">
-              <p className="text-[9px] font-black text-yellow-300 uppercase mb-1">Giải Nhất (02 giải)</p>
-              <p className="font-bold text-xs">Xe Honda SH 125i</p>
-              <p className="text-[9px] opacity-70">69tr đ/giải</p>
+              <div className="flex items-center gap-1 mb-1">
+                <span className="text-red-300">❤️</span>
+                <p className="text-[9px] font-black text-yellow-300 uppercase">Giải Nhất (02 giải)</p>
+              </div>
+              <p className="font-bold text-xs">Xe Honda SH</p>
+              <p className="text-[9px] opacity-80 font-bold">69.000.000 đ/xe</p>
             </div>
             <div className="bg-white/10 backdrop-blur-sm p-3 rounded-2xl border border-white/10 hover:bg-white/15 transition-all">
-              <p className="text-[9px] font-black text-yellow-300 uppercase mb-1">Giải Nhì (05 giải)</p>
-              <p className="font-bold text-xs">Sổ TK Tiết Kiệm</p>
-              <p className="text-[9px] opacity-70">20tr đ/giải</p>
+              <div className="flex items-center gap-1 mb-1">
+                <span className="text-red-300">❤️</span>
+                <p className="text-[9px] font-black text-yellow-300 uppercase">Giải Nhì (03 giải)</p>
+              </div>
+              <p className="font-bold text-xs">Sổ tiết kiệm</p>
+              <p className="text-[9px] opacity-80 font-bold">10.000.000 đ/sổ</p>
             </div>
             <div className="bg-white/10 backdrop-blur-sm p-3 rounded-2xl border border-white/10 hover:bg-white/15 transition-all">
-              <p className="text-[9px] font-black text-yellow-300 uppercase mb-1">Giải Ba (10 giải)</p>
-              <p className="font-bold text-xs">Tủ lạnh Samsung</p>
-              <p className="text-[9px] opacity-70">10tr đ/giải</p>
+              <div className="flex items-center gap-1 mb-1">
+                <span className="text-red-300">❤️</span>
+                <p className="text-[9px] font-black text-yellow-300 uppercase">Giải Ba (27 giải)</p>
+              </div>
+              <p className="font-bold text-xs">Sổ tiết kiệm</p>
+              <p className="text-[9px] opacity-80 font-bold">5.000.000 đ/sổ</p>
             </div>
             <div className="bg-white/10 backdrop-blur-sm p-3 rounded-2xl border border-white/10 hover:bg-white/15 transition-all">
-              <p className="text-[9px] font-black text-yellow-300 uppercase mb-1">Giải KK (100 giải)</p>
-              <p className="font-bold text-xs">Tiền mặt may mắn</p>
-              <p className="text-[9px] opacity-70">500k đ/giải</p>
+              <div className="flex items-center gap-1 mb-1">
+                <span className="text-red-300">❤️</span>
+                <p className="text-[9px] font-black text-yellow-300 uppercase">Giải May Mắn (270 giải)</p>
+              </div>
+              <p className="font-bold text-xs">Tiền mặt</p>
+              <p className="text-[9px] opacity-80 font-bold">500.000 đ/giải</p>
             </div>
           </div>
         </div>
@@ -81,23 +95,23 @@ const SpecialPromotion: React.FC = () => {
         <div className="mt-6 flex flex-col gap-4">
           <div className="flex justify-between items-end border-t border-white/20 pt-4">
             <div>
-              <p className="text-[10px] text-yellow-200 font-bold uppercase tracking-tighter">Tổng giá trị thưởng</p>
-              <p className="text-2xl font-black text-white leading-none">1,2 TỶ ĐỒNG</p>
+              <p className="text-[10px] text-yellow-200 font-bold uppercase tracking-tighter">Tổng giá trị giải thưởng</p>
+              <p className="text-2xl font-black text-white leading-none">TRÊN 1,2 TỶ ĐỒNG</p>
             </div>
             <div className="text-right">
-              <p className="text-[9px] font-bold text-white/70 italic leading-tight">Chỉ từ 6tr đ/phiếu</p>
-              <p className="text-[9px] font-bold text-white/70 italic leading-tight">Đến hết 31/05/2026</p>
+              <p className="text-[9px] font-bold text-white/80 italic leading-tight">Mỗi 6tr đ nhận 01 phiếu</p>
+              <p className="text-[9px] font-bold text-white/80 italic leading-tight">Áp dụng đến 31/05/2026</p>
             </div>
           </div>
 
           <a 
             href="tel:0966400364"
-            className="w-full bg-yellow-400 text-red-700 py-3 rounded-2xl font-black text-xs hover:bg-white transition-all flex items-center justify-center gap-2 shadow-lg shadow-red-900/40 active:scale-95"
+            className="w-full bg-yellow-400 text-red-700 py-3.5 rounded-2xl font-black text-xs hover:bg-white hover:scale-[1.02] transition-all flex items-center justify-center gap-2 shadow-lg shadow-red-900/40 active:scale-95"
           >
             <svg className="h-4 w-4" fill="currentColor" viewBox="0 0 20 20">
               <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 004.587 4.587l.773-1.548a1 1 0 011.06-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z" />
             </svg>
-            TƯ VẤN THAM GIA NGAY
+            TƯ VẤN GỬI TIỀN NGAY
           </a>
         </div>
       </div>
